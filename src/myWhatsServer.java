@@ -4,6 +4,9 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.net.ServerSocketFactory;
+import javax.net.ssl.SSLServerSocketFactory;
+
 
 public class myWhatsServer{
 
@@ -13,10 +16,13 @@ public class myWhatsServer{
 	}
 	
 	public void startServer (){
-		ServerSocket sSoc = null;
-        
+		ServerSocketFactory ssf = null;
+        ServerSocket ss = null;
+		System.setProperty("javax.net.ssl.keyStore", "myServer.keyStore");
+		System.setProperty("javax.net.ssl.keyStorePassword", "qwerty");
 		try {
-			sSoc = new ServerSocket(23456);
+			ssf = SSLServerSocketFactory.getDefault();
+			ss = ssf.createServerSocket(23456);
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			System.exit(-1);
@@ -24,7 +30,7 @@ public class myWhatsServer{
          
 		while(true) {
 			try {
-				Socket inSoc = sSoc.accept();
+				Socket inSoc = ss.accept();
 				ServerThread newServerThread = new ServerThread(inSoc);
 				newServerThread.start();
 		    }

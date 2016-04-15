@@ -7,6 +7,9 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.util.Scanner;
 
+import javax.net.SocketFactory;
+import javax.net.ssl.SSLSocketFactory;
+
 
 public class myWhats {
 
@@ -24,11 +27,12 @@ public class myWhats {
 			String[] parts = serverPort.split(":");
 			String server = parts[0]; 
 			int port = Integer.parseInt(parts[1]);
-
+			System.setProperty("javax.net.ssl.trustStore", "myCliente.keyStore");
 			try {
-				Socket socket = new Socket(server, port);
-				ObjectOutputStream outStream = new ObjectOutputStream(socket.getOutputStream());
-				ObjectInputStream inStream = new ObjectInputStream(socket.getInputStream());
+				SocketFactory sf = SSLSocketFactory.getDefault();
+				Socket s = sf.createSocket(server, port);
+				ObjectOutputStream outStream = new ObjectOutputStream(s.getOutputStream());
+				ObjectInputStream inStream = new ObjectInputStream(s.getInputStream());
 				user = args[0];
 				if(args[2].equals("-p")) {
 					passwd = args[3];
@@ -50,7 +54,7 @@ public class myWhats {
 				}
 
 				outStream.close();
-				socket.close();
+				s.close();
 
 			}catch (IOException e) {
 				e.printStackTrace();

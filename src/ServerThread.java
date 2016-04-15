@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 class ServerThread extends Thread {
-
+	
 	private Socket socket = null;
 	private boolean autenticated;
 
@@ -55,7 +55,7 @@ class ServerThread extends Thread {
 				case "-m":
 					// Contact e Message
 					try {
-						// Envia confirmaçao se pode ou nao escrever mensagem
+						// Envia confirmaï¿½ao se pode ou nao escrever mensagem
 						outStream.writeObject((boolean) autenticated);
 
 						String contact = (String) inStream.readObject();
