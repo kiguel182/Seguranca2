@@ -3,5 +3,5 @@ grant codeBase "file:${java.home}/lib/ext/*" {
 	permission java.net.SocketPermission "*:23456", "connect,resolve";
 	permission java.io.FilePermission "/-", "read, write, delete";
 	permission java.io.FilePermission "/Log", "read";
-	permission java.util.PropertyPermission "javax.net.ssl.trustStore", "write";
+	permission java.util.PropertyPermission "javax.net.ssl.trustStore", "read, write";
 };

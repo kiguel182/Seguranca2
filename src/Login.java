@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import javax.xml.bind.DatatypeConverter;
+
 public class Login {
 
 	private String user;
@@ -131,12 +133,14 @@ public class Login {
 		return userExists(user,file) && !existingUser(user,pass,file);
 	}
 	
-	public byte[] generateSalt() {
+	public String generateSalt() {
 		
         SecureRandom random = new SecureRandom();
         byte bytes[] = new byte[6];
         random.nextBytes(bytes);
-        return bytes;
+        String salt = DatatypeConverter.printBase64Binary(bytes);
+    
+        return salt;
     }
 
 }
