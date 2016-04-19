@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Random;
 
 public class Login {
 
@@ -128,5 +130,13 @@ public class Login {
 	public boolean wrongPassword(String user, String pass, File file) throws IOException{
 		return userExists(user,file) && !existingUser(user,pass,file);
 	}
+	
+	public byte[] generateSalt() {
+		
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[6];
+        random.nextBytes(bytes);
+        return bytes;
+    }
 
 }
